@@ -1,0 +1,18 @@
+ngb-carousel {
+  .picsum-img-wrapper {
+    position: relative;
+  }
+
+  .carousel-inner {
+    max-height: 25rem;
+  }
+
+  .carousel-item {
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+

@@ -1,0 +1,200 @@
+.page-header {
+  $namespace: &;
+
+  display: flex;
+  width: 100%;
+  height: $headerHeight;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  padding: 0 3rem;
+  background: $white;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .29);
+
+  &__logo {
+    > a {
+      color: inherit;
+      display: block;
+      height: 100%;
+      padding: 0;
+    }
+
+    img {
+      height: 100%;
+
+      @media screen and (max-width: 62.5em) {
+        max-width: 15.5rem;
+        height: 100%;
+      }
+    }
+
+    @media screen and (max-width: 32em) {
+      > * {
+        padding: 1.5rem;
+      }
+    }
+
+    @media screen and (max-width: 22em) {
+      > * {
+        padding-right: 1rem;
+        padding-left: 2rem;
+      }
+    }
+  }
+
+  &__btn-text {
+    @include underlined-link-base;
+
+    &::before {
+      transform-origin: 100% 0;
+      transition-property: transform;
+      transition-delay: initial;
+    }
+
+    &::after {
+      content: none;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: $green;
+
+    &:hover, &:focus, &:active {
+      color: $green;
+
+      #{$namespace}__btn-text {
+        @include underlined-link-hover;
+
+        color: currentColor;
+
+        &::before {
+          transform-origin: 0 0;
+        }
+      }
+    }
+  }
+
+  &__nav {
+    margin-left: auto;
+    display: flex;
+
+    @media screen and (max-width: 62.5em) {
+      flex-direction: column;
+      width: 100%;
+      height: calc(100vh - 8rem);
+      position: fixed;
+      top: $headerHeight;
+      right: 0;
+      z-index: 100;
+      padding: 4rem 0;
+      overflow: auto;
+      background: $white;
+      transition: transform .25s ease-in-out;
+
+      &:not(#{$namespace}__nav--open) {
+        visibility: hidden;
+        transform: translate(100%);
+      }
+
+      #{$namespace}__btn {
+        display: block;
+        text-align: center;
+        font-size: 2.6rem;
+        transition: none;
+
+        &:not(:first-child) {
+          margin-top: 2.5rem;
+        }
+      }
+    }
+
+    #{$namespace}__btn {
+      text-transform: uppercase;
+      &:hover, &:focus, &:active {
+      }
+
+      #{$namespace}__btn-text {
+        &::before {
+        }
+      }
+    }
+  }
+
+  &__burger {
+    display: none;
+    width: 2.5rem;
+    height: 100%;
+    align-self: center;
+    padding: 0;
+    box-sizing: content-box;
+    border: 0;
+    outline: 0;
+    background: none;
+    cursor: pointer;
+
+    #{$namespace}__burger-icon {
+      display: block;
+      border-top: .2rem solid currentColor;
+      transition: border-bottom .25s ease-in-out;
+
+      &::before,
+      &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        margin-top: .5rem;
+        border-bottom: .2rem solid currentColor;
+        transition: transform .25s ease-in-out;
+      }
+
+      &::after {
+        width: 65%;
+      }
+    }
+
+    &--open {
+      #{$namespace}__burger-icon {
+        border-top: .2rem solid transparent;
+        transition: border-top .25s ease-in-out;
+
+        &::before,
+        &::after {
+          transition: transform .25s ease-in-out;
+        }
+
+        &::before {
+          transform: rotate(-405deg) translateY(.1rem) translateX(-.1rem);
+        }
+
+        &::after {
+          width: 100%;
+          transform: rotate(405deg) translateY(-.4rem) translateX(-.4rem);
+        }
+      }
+    }
+
+    @media screen and (max-width: 62.5em) {
+      display: block;
+
+      + #{$namespace}__logo {
+        position: absolute;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+/* stylelint-disable color-no-hex */
+// ##############
+// ##  Colors  ##
+// ##############
+// Greys
+$white:        #fff;
+$white-soft:   #f8f9f9;
+$grey:         #4b4744;
+$grey-thin:    #f0f0f0;
+$grey-lighter: #f2f2f2;
+$grey-light:   #595755;
+$grey-soft:    #78797c;
+$grey-dark:    #1d1d1b;
+
+// Colors
+$red:          #ed594f;
+$green:        #96ab04;
+$green-light:  #2ccda2;
+$orange:       #ff9900;
+$orange-light: #faba2a;
+$orange-lighter: #fff9ee;
+$blue:          #0000cc;
+$blue-light:   #007bff;
+
+$alert-orange: #f99f11;
+$alert-red:    $red;
+$alert-green:  $green-light;
+
+$statusColors: (
+        'green': #73B955 dark,
+        'blue': #2A99A7 dark,
+        'red': #DC392E light,
+        'yellow': #DEA112 light,
+);
+
+// gradient Colors
+$gradient-left: #dddee0;
+$gradient-right: #b8b9bd;
+
+// ########################
+// ##  Global variables  ##
+// ########################
+// Fonts
+$biryaniName: 'Biryani';
+$biryaniFamily: #{$biryaniName}, Arial, sans-serif;
+
+// Layout
+$containerHPaddingLg: 12rem;
+$containerHPaddingMd: 6rem;
+$containerHPaddingSm: 1.6rem;
+
+// Buttons
+$btnBaseHeight: 5.3rem;
+$btnSmallHeight: 4.2rem;
+
+// Header
+$headerHeight: 8rem;
+$headerBtnPadding: 2rem;
+
+// Underlined links
+$underlineThickness: .2rem;
+$underlineRestingColor: $orange-light;
+$underlineHoverColor: $blue;
+$underlineAnimationGapPercent: 10%;
+$underlineAnimationDuration: .75s;
+$underlineAnimationEasing: ease;
+
+// Dashed titles
+$dashTitleLPad: 4.5rem;
+$dashTitleWidth: 3rem;
+$dashTitleHeight: .5rem;
+
+// Dashed list
+$dashListLPad: 2.5rem;
+$dashListWidth: 1.6rem;
+$dashListHeight: .3rem;
+
+// Form Elements
+$fieldTextHeight: 5.5rem;
+$fieldTextHPad: 2rem;
+$fieldTextLabelTransitionDuration: .2s;
+
+// Registration Breadcrumbs
+$regisStepColor: $grey-light;
+$regisPrevStepBg: $green;
+$regisHeaderGutter: 5rem;
+$regisReassuranceTopOverflow: 4rem;
+
+// Sponsorship banner
+$sponsorStatusDim: 13rem;
+$sponsorStatusOverflow: 2rem;
+
+// Craftspeople list
+$craftsColOffset: 23.68421%;
+$craftsColumnGap: 4rem;
+
+// Craftsperson's index page
+$profileHeaderOffset: 5rem;
+$sidebarWidth: 32rem;
+$sidebarPadding: 2.5rem;
+$dashSectionRightMargin: 12rem;
+$dashSectionLeftMargin: 3rem;
+$dashSectionHeaderHeight: 6rem;
+$dashSectionPadding: 3rem;
+$dashSectionPaddingMobile: 1.6rem;
+
+// Quote details page
+$quoteDetailsActionsHeight: 8rem;
+$quoteDetailsActionsHeightMobile: 5.5rem;
+$quoteAdminsLeftBorder: .5rem;
+
+// Call me back button
+$callbackDim: 10rem;
+
+// ####################################
+// ##  Set global custom properties  ##
+// ####################################
+:root {
+  // Others
+  --callback-base-dim: #{$callbackDim};
+}
+/* stylelint-enable */

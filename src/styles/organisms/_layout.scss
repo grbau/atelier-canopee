@@ -1,0 +1,50 @@
+.main {
+  margin-top: $headerHeight;
+  padding-top: 2rem;
+}
+
+.canopee-container {
+  padding-right: $containerHPaddingLg;
+  padding-left: $containerHPaddingLg;
+
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+    clear: both;
+  }
+
+  @media screen and (max-width: 62.5em) {
+    padding-right: $containerHPaddingMd;
+    padding-left: $containerHPaddingMd;
+  }
+
+  @media screen and (max-width: 37.5em) {
+    padding-right: $containerHPaddingSm;
+    padding-left: $containerHPaddingSm;
+  }
+
+  &--floating {
+    width: 80rem;
+    max-width: calc(100% - 6rem);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+
+    @media screen and (max-width: 32em) {
+      max-width: 100%;
+    }
+  }
+
+  &--orange {
+    background: $orange;
+  }
+}
+
+// Reset properties list
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

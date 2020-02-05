@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+:root {
+  font-size: 62.5%; // Force a font-size of 10px on the root element to have a clean value for the 'rem' unit
+  box-sizing: border-box;
+}
+
+a {
+  color: currentColor;
+}
+
+@import 'variables';
+@import "mixins";
+@import 'atoms';
+@import 'molecules';
+@import 'organisms';
