@@ -1,0 +1,457 @@
+%animation-before {
+  content: "";
+  width: 120%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding-top: 120%;
+  border-radius: 100%;
+  opacity: .3;
+  background-color: $white;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.canopee-btn {
+  $namespace: &;
+  $padding: .5rem 2rem;
+  $animationDuration: .5s;
+
+  display: flex;
+  height: $btnBaseHeight;
+  justify-content: center;
+  align-items: center;
+  min-height: $btnBaseHeight;
+  position: relative;
+  padding: $padding;
+  border: 1px solid $grey-soft;
+  border-radius: .4rem;
+  overflow: hidden;
+  background: $grey;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none !important;
+  color: $white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: .25s ease;
+  transition-property: background, color, border-color;
+
+  &::before {
+    @extend %animation-before;
+  }
+
+  &:focus {
+    &::before {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1);
+      transition:
+        transform $animationDuration ease,
+        opacity (2.5 * $animationDuration) ease-in-out;
+    }
+  }
+
+  &:active {
+    &::before {
+      opacity: .3;
+      transform: translate(-50%, -50%) scale(0);
+      transition: none;
+    }
+  }
+
+  &:hover {
+    border-color: transparent;
+    background: $green;
+    color: $white;
+  }
+
+  &--round {
+    border-radius: $btnBaseHeight;
+  }
+
+  &--small {
+    min-height: $btnSmallHeight;
+  }
+
+  &--black {
+    border-color: transparent;
+    background: $grey-dark;
+    color: $white;
+
+    &::before {
+      background-color: $grey-soft;
+    }
+
+    &:hover {
+      border-color: $grey-lighter;
+      background-color: $white;
+      color: $grey-dark;
+    }
+  }
+
+  &--gold {
+    border-color: transparent;
+    background: $orange-light;
+    color: $white;
+  }
+
+  &--green {
+    border-color: transparent;
+    background: $green-light;
+    color: $white;
+  }
+
+  &--grey-thin {
+    padding: .7rem 1rem .5rem;
+    border-color: transparent;
+    background: $grey-thin;
+    color: $grey-soft;
+    min-height: auto;
+
+    &:hover, &:focus, &:active {
+      border-color: transparent;
+      background: $grey-thin;
+      color: $grey-dark;
+    }
+  }
+
+  &--hover-gold {
+    &:hover {
+      border-color: transparent;
+      background: $orange;
+      color: $white;
+    }
+  }
+
+  &--empty {
+    border: 1px solid $grey;
+    background-color: transparent;
+    font-weight: 400;
+    color: $grey;
+
+    &#{$namespace}--green {
+      border-color: $green;
+
+      &:hover, &:focus, &:active {
+        background-color: $green;
+      }
+    }
+
+    &#{$namespace}--red {
+      &:hover, &:focus, &:active {
+        background-color: $red;
+      }
+    }
+  }
+
+  &--eye-password {
+    border: none;
+  }
+
+  &--upload {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    border-color: $grey-lighter;
+    background-color: $white;
+    color: $grey-dark;
+
+    &:hover, &:focus, &:active {
+      border-color: $grey-soft;
+      background-color: $white;
+      color: $grey-dark;
+    }
+
+    .pnab-sprite--upload {
+      margin-right: 1rem;
+      color: inherit !important;
+    }
+  }
+
+  &--filter {
+    min-height: auto;
+    padding: 1.5rem 4rem;
+    border: none;
+    box-shadow: 0 .2rem 1.2rem 0 rgba(0, 0, 0, .1);
+
+    &--active {
+      background: $grey-dark;
+      border-color: $white;
+      color: $white;
+    }
+  }
+
+  &--arrow-before,
+  &--arrow-after {
+    &::after {
+      content: "";
+      display: block;
+      width: 1em;
+      height: 1em;
+      border: solid;
+      border-width: .2em .2em 0 0;
+      font-size: 1rem;
+    }
+  }
+
+  &--arrow-before {
+    text-align: right;
+
+    &::after {
+      order: -1;
+      margin-right: 3rem;
+      transform: rotate(-135deg) translateZ(0);
+    }
+  }
+
+  &--arrow-after {
+    text-align: left;
+
+    &::after {
+      margin-left: 3rem;
+      transform: rotate(45deg) translateZ(0);
+    }
+  }
+
+  &--right {
+    margin-left: auto;
+  }
+
+  &--loading {
+    color: transparent;
+    pointer-events: none;
+    transition: color .2s ease-in-out;
+
+    &::after {
+      content: url('data:image/svg+xml,%3Csvg width="19px" height="19px" fill="white" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M4.13285531,4.13361534 L6.64950598,6.65026601 L0.949277971,6.65026601 L0.949277971,0.950038002 L2.79045162,2.79121165 C4.54042162,1.03459138 6.92026681,0 9.49961998,0 C14.7390796,0 19,4.26187047 19,9.50038002 L17.099924,9.50038002 C17.099924,5.30976239 13.6911876,1.900076 9.49961998,1.900076 C7.43613745,1.900076 5.53226129,2.7275591 4.13285531,4.13361534 Z M14.8671447,14.8683797 L12.350494,12.350779 L18.050722,12.350779 L18.050722,18.051007 L16.2095484,16.2098334 C14.4595784,17.9664537 12.0797332,19.001045 9.50038002,19.001045 C4.26092044,19.001045 0,14.7401246 0,9.50066503 L1.900076,9.50066503 C1.900076,13.6912827 5.30881235,17.100969 9.50038002,17.100969 C11.5638626,17.100969 13.4677387,16.2734859 14.8671447,14.8683797 Z"%3E%3C/path%3E%3C/svg%3E');
+      width: 1.9rem;
+      height: 1.9rem;
+      position: absolute;
+      top: calc(50% - .9rem);
+      left: calc(50% - .9rem);
+      animation: loading-btn 1s linear infinite;
+    }
+
+    @keyframes loading-btn {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    &:hover, &:focus, &:active {
+      color: transparent;
+    }
+  }
+
+  &--success {
+    color: transparent;
+    pointer-events: none;
+    transition: color .2s ease-in-out;
+
+    &::after {
+      text-indent: 0;
+      content: url('data:image/svg+xml,%3Csvg width="20px" height="15px" fill="white" viewBox="0 0 20 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"%3E%3Cg id="Tunnel-inscription" stroke="none" stroke-width="1" fill-rule="evenodd"%3E%3Cg id="Asset" transform="translate(-73.000000, -309.000000)"%3E%3Cpath d="M85,319 L85,306 L88,306 L88,319 L88,322 L78,322 L78,319 L85,319 Z" id="Ok" transform="translate(83.000000, 314.000000) rotate(45.000000) translate(-83.000000, -314.000000) "%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A');
+      width: 1.9rem;
+      height: 1.9rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover, &:focus, &:active {
+      color: transparent;
+    }
+  }
+
+  // Togglable Button
+  &--toggle {
+    min-height: 0;
+    padding: 0;
+    border: none;
+    overflow: visible;
+    color: $grey-dark;
+    cursor: auto;
+    transition: none;
+
+    &::before {
+      content: none;
+    }
+
+    [class*="jcf-"]:not(input) {
+      display: none !important;
+    }
+
+    #{$namespace}__content {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      min-height: $btnBaseHeight;
+      position: relative;
+      padding: $padding;
+      border: 1px solid $grey-lighter;
+      border-radius: inherit;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .25s ease;
+      transition-property: background, color, border-color;
+
+      &::before {
+        @extend %animation-before;
+      }
+
+      &:not(.underlined-link) {
+        height: $btnBaseHeight;
+      }
+    }
+
+    input {
+      display: block;
+      position: absolute;
+      visibility: visible;
+      clip: rect(0, 0, 0, 0);
+
+      &:focus ~ #{$namespace}__content::before {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+        transition: transform $animationDuration ease, opacity (2.5 * $animationDuration) ease-in-out;
+      }
+
+      &:active ~ #{$namespace}__content::before {
+        opacity: .3;
+        transform: translate(-50%, -50%) scale(0);
+        transition: none;
+      }
+    }
+
+    &:hover {
+      padding: 0;
+      border: none;
+      background: none;
+      color: $grey-dark;
+    }
+
+    &:hover #{$namespace}__content,
+    input:focus ~ #{$namespace}__content,
+    input:active ~ #{$namespace}__content {
+      border-color: $grey-soft;
+    }
+
+    input:checked ~ #{$namespace}__content {
+      border-color: transparent;
+      background: $orange-light;
+      color: $white;
+    }
+
+    &:hover input:checked,
+    input:checked:focus,
+    input:checked:active {
+      ~ #{$namespace}__content {
+        border-color: $grey-light;
+      }
+    }
+
+    &#{$namespace}--dummy {
+      &:hover {
+        #{$namespace}__content {
+          border-color: $grey-lighter;
+          cursor: auto;
+        }
+      }
+    }
+  }
+
+  &:disabled {
+    background: $grey-lighter;
+    cursor: not-allowed;
+    color: currentColor;
+    border: none;
+  }
+
+  &--icon-text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border: none;
+
+    .icon {
+      display: flex;
+      width: 6.3rem;
+      height: 6.3rem;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2.4rem;
+      border: 1px solid $grey-lighter;
+      border-radius: 100%;
+    }
+
+    .pnab-sprite {
+      display: block;
+      color: $orange;
+    }
+
+    .text {
+      font-weight: bold;
+      font-size: 1.6rem;
+    }
+
+    &:hover, &:focus, &:active {
+      background: none;
+      color: currentColor;
+    }
+  }
+}
+
+.canopee-btn-group {
+  margin-right: -.5rem;
+  margin-left: -.5rem;
+
+  > * {
+    display: inline-flex;
+    margin: .5rem;
+    vertical-align: middle;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+  &--multiline {
+    display: flex;
+    flex-wrap: wrap;
+
+    .pnab-btn {
+      flex: 1 auto;
+
+      &__content {
+        width: 100%;
+        font-weight: normal;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+.tooltip-btn {
+  width: auto;
+  height: auto;
+  padding: 0 1rem;
+  border: none;
+  background: $white;
+  font-weight: 700;
+  font-size: 1em;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,27 @@
+<div class="canopee-container">
+    <form [formGroup]="loginForm" (submit)="onSubmit(loginForm)" autocomplete="off">
+        <div class="form-group form-group form-group--text">
+            <label class="form-group__label" for="email">Nom Utilisateur</label>
+            <input type="email" autocomplete="off"
+                   class="form-control form-group__input" email
+                   name="email"
+                   id="email"
+                   formControlName="loginForm.email" class="form-control" [ngClass]="{ 'is-invalid': submitted && loginForm.email.errors }"
+                   required
+                 >
+        </div>
+
+
+        <div class="form-group form-group form-group--text">
+            <label class="form-group__label" for="password">Mot de passe</label>
+            <input type="password" autocomplete="off"
+                   class="form-control form-group__input"
+                   name="password"
+                   id="password"
+                   formControlName="loginForm.password" class="form-control" [ngClass]="{ 'is-invalid': submitted && loginForm.password.errors }"
+                   required
+                   >
+        </div>
+        <button type="submit" class="btn canopee-btn" [disabled]="!loginForm.valid">Se connecter</button>
+    </form>
+</div>

@@ -2,8 +2,8 @@
 
 // db credentials
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', 'ateliercanopee');
+define('DB_PASS', 'bardinet');
 define('DB_NAME', 'ateliercanopee');
 
 // Connect with the database.

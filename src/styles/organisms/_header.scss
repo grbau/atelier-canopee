@@ -66,12 +66,12 @@
     border: none;
     background: none;
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-decoration: none !important;
     cursor: pointer;
-    color: $green;
+    color: $grey;
 
-    &:hover, &:focus, &:active {
+    &:hover, &:focus, &:active, &--active {
       color: $green;
 
       #{$namespace}__btn-text {

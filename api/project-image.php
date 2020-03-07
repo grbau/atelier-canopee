@@ -3,10 +3,10 @@
  * Returns the list image of projects for slideshow.
  */
 require 'connect.php';
-    
+
 $images = [];
 
-$sql = "SELECT url, title, projectId FROM projects_images";
+$sql = "SELECT url, title, format, projectId FROM projects_images";
 
 if($result = mysqli_query($con,$sql))
 {
@@ -15,10 +15,11 @@ if($result = mysqli_query($con,$sql))
   {
     $images[$cr]['url'] = $row['url'];
     $images[$cr]['title'] = $row['title'];
+    $images[$cr]['format'] = $row['format'];
     $images[$cr]['projectId'] = $row['projectId'];
     $cr++;
   }
-    
+
   echo json_encode(['data'=>$images]);
 }
 else

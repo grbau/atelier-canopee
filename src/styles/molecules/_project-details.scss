@@ -1,0 +1,41 @@
+.project-details {
+  $namespace: &;
+
+  margin-top: 2rem;
+  color: $grey;
+
+  &__item {
+    display: flex;
+    align-items: baseline;
+
+    + #{$namespace} {
+      margin-top: .8rem;
+    }
+  }
+
+  &__icon {
+    margin-right: 1.2rem;
+  }
+
+  &__value {
+    font-weight: 700;
+  }
+
+  &__process {
+    margin-top: 1.2rem;
+  }
+}
+
+
+.project-details-list {
+  counter-reset: project-list;
+
+  &__item {
+    counter-increment: project-list;
+
+    &::before {
+      content: counter(project-list) ". ";
+      font-weight: bold;
+    }
+  }
+}

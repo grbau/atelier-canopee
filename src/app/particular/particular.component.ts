@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../models/project.model';
 import { ProjectService } from '../services/project.service';
 import { NgForm } from '@angular/forms';
+import { UserService } from '../services/user.service';
+import { AlertService } from '../services/alert.service';
+import { FormFieldService } from '../services/form-field.service';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-particular',
@@ -10,21 +14,42 @@ import { NgForm } from '@angular/forms';
 })
 export class ParticularComponent implements OnInit {
 
-  project = new Project('', '', '', '', new Date(), 0, '');
+  project = new Project('', '', '', '', '', '', 0, '', '', '');
 
   projects: Project[];
 
-  types = ['Particuliers', 'Commercial', 'Collectif'];
+  isLogged: boolean;
+
+  types = ['Particulier', 'Commercial', 'Collectif'];
+
+  formats = ['vertical', 'horizontal'];
 
   error = '';
-  success = '';
+  success: string;
 
-  constructor(private projectService: ProjectService) { }
+  showForm = false;
 
-  public fileUpload: File = null;
+  title = 'Particuliers';
+
+  constructor(
+      private projectService: ProjectService,
+      private userService: UserService,
+      private alertService: AlertService,
+      private formFieldService: FormFieldService,
+      private titleService: Title,
+      private meta: Meta
+      ) { }
 
   ngOnInit() {
+      this.titleService.setTitle(this.title);
+      this.meta.addTag({name: 'keywords', content: 'Atelier canopee architecte'});
+      this.meta.addTag({name: 'description', content: 'Atelier canopee architecte'});
       this.getParticularProjects();
+      this.isLogged = this.userService.isLoggedIn();
+      setTimeout( () => {
+          this.formFieldService.fieldFocusInputElement();
+      }, 1000
+      );
   }
 
   getParticularProjects(): void {
@@ -38,16 +63,9 @@ export class ParticularComponent implements OnInit {
     );
   }
 
-  handleFileInput(file) {
-      this.fileUpload = file;
-  }
-
   addProject(f: NgForm) {
     this.error = '';
     this.success = '';
-
-    const formData = new FormData();
-    formData.append('image', this.fileUpload, this.fileUpload.name);
 
     this.projectService.addProject(this.project)
         .subscribe(
@@ -56,14 +74,20 @@ export class ParticularComponent implements OnInit {
               this.projects = res;
 
               // Inform the user
-              this.success = 'Created successfully';
+              this.alertService.success('Le projet ' + this.project['title'] + ' a été ajouté avec succès');
 
               // Reset the form
               f.reset();
             },
-            (err) => this.error = err
+            (err) => this.alertService.error(err)
         );
   }
 
-
+  displayForm() {
+      this.showForm = !this.showForm;
+      setTimeout( () => {
+              this.formFieldService.fieldFocusInputElement();
+          }, 1000
+      );
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  isLogged: boolean;
+
+  constructor(
+      private userService: UserService,
+      private router: Router
+  ) {
+    this.userService.getLoggedInName.subscribe(name => this.changeName(name));
+    if (this.userService.isLoggedIn()) {
+      this.isLogged = true;
+    } else {
+      this.isLogged = false;
+    }
+  }
+
+  private changeName(name: boolean): void {
+    this.isLogged = name;
+  }
 
   toggleMenu() {
     const OPEN_HEADER_NAV_CLASS = 'page-header__nav--open'
@@ -25,6 +43,8 @@ export class HeaderComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.isLogged = this.userService.isLoggedIn();
+
     Array.from(document.querySelectorAll('.page-header__nav .page-header__btn')).forEach(nav => {
       nav.addEventListener('click', () => {
         document.body.style.overflow = '';
@@ -32,6 +52,12 @@ export class HeaderComponent implements OnInit {
         document.querySelector('.page-header__burger').classList.remove('page-header__burger--open');
       });
     });
+  }
+
+  logout() {
+    this.userService.deleteToken();
+    this.isLogged = false;
+    this.router.navigate(['/home']);
   }
 
 }

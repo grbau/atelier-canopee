@@ -1,17 +1,23 @@
 .main {
   margin-top: $headerHeight;
-  padding-top: 2rem;
+  padding: 3rem 0;
+  min-height: calc(100vh - #{$headerHeight} * 1.8);
 }
 
 .canopee-container {
   padding-right: $containerHPaddingLg;
   padding-left: $containerHPaddingLg;
+  margin: auto;
 
   &::before,
   &::after {
     content: " ";
     display: table;
     clear: both;
+  }
+
+  @media screen and (min-width: 87.5em) {
+    max-width: 1400px;
   }
 
   @media screen and (max-width: 62.5em) {

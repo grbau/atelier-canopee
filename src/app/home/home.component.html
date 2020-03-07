@@ -1,7 +1,7 @@
 <section class="canopee-container">
-    <ul class="projects-list row">
-        <li *ngFor="let project of projects" class="col-md-4 col-xs-12 projects-list__item">
-            <a href="#" class="projects-list__link">
+    <ul class="projects-list">
+        <li *ngFor="let project of projects" class="projects-list__item" [ngClass]="{'projects-list__item--vertical': project.imageFormat =='vertical', 'projects-list__item--horizontal': project.imageFormat =='horizontal'}">
+            <a [routerLink]="['/' + project.type | lowercase, project.id]" class="projects-list__link">
                 <figure class="projects-list__figure">
                     <img src="{{ project.image }}" class="projects-list__image" alt="{{ project.title }}" />
                     <figcaption class="projects-list__figcaption">
@@ -11,9 +11,5 @@
             </a>
         </li>
 
-        <!--<li class="vertical">-->
-            <!--<a href="/index.php/appartements-maisons-lofts/20-loft"><img src="/images/rsz/d1/d18c163760fa2b6fda2520e3a946aecc.jpg"><div class="mod-articles-category-title"><span>Loft moderne à Ivry</span></div></a>-->
-
-        <!--</li>-->
     </ul>
 </section>

@@ -1,0 +1,226 @@
+<div class="canopee-container">
+    <div *ngFor="let proj of project">
+
+        <!-- carousel -->
+        <ngb-carousel #carousel interval="3000" *ngIf="imagesProject">
+            <ng-template ngbSlide *ngFor="let image of imagesProject; index as i">
+                <!--<div class="carousel-caption">-->
+                    <!--<h3>{{ image.title }}</h3>-->
+                <!--</div>-->
+                <div class="picsum-img-wrapper">
+                    <a [routerLink]="['/commercial', proj.id]" fragment="{{ i }}">
+                        <img [src]="image.url" alt="{{ image.title }}">
+                    </a>
+                </div>
+
+            </ng-template>
+        </ngb-carousel>
+
+        <div *ngFor="let image of imagesProject; let i = index; let first = first; let last = last" class="lightbox" id="{{i}}">
+            <a [routerLink]="['/commercial', proj.id]" class="lightbox__close"></a>
+            <a *ngIf="!first" [routerLink]="['/commercial', proj.id]" fragment="{{ i - 1 }}" class="lightbox__previous"></a>
+            <img src="{{image.url }}">
+            <a *ngIf="!last" [routerLink]="['/commercial', proj.id]" fragment="{{ i + 1 }}" class="lightbox__next"></a>
+        </div>
+
+        <h1 class="h2-like title-line-after"> {{ proj.title }}</h1>
+        <!-- update project form -->
+        <div class="project-details">
+            <p>{{ proj.description }}</p>
+
+            <div class="project-details__item">
+                <i class="project-details__icon icon icon-office"></i>
+                <span class="project-details__value">
+                    {{ proj.type }}
+                </span>
+            </div>
+            <div class="project-details__item">
+                <i class="project-details__icon icon icon-location"></i>
+                <span class="project-details__value">
+                    {{ proj.location }}
+                </span>
+            </div>
+
+            <div class="project-details__item" *ngIf="proj.realisationDate">
+                <i class="project-details__icon icon icon-calendar"></i>
+                <span class="project-details__value">
+                    {{ proj.realisationDate }}
+                </span>
+            </div>
+
+            <div class="project-details__item" *ngIf="proj.surface">
+                <i class="project-details__icon icon icon-measure"></i>
+                <span class="project-details__value">
+                    {{ proj.surface }} m<sup>2</sup>
+                </span>
+            </div>
+
+            <div class="project-details__process" *ngIf="proj.process">
+                <span>Procédés mis en oeuvre: </span>
+                <div [innerHTML]= proj.process ></div>
+            </div>
+
+        </div>
+
+        <div *ngIf="isLogged" class="mt-5">
+            <h1 class="h2-like title-line-after cursor-pointer" (click)="displayForm()">
+                <i class="icon icon-plus"  [ngClass]="!showForm ? 'icon-plus' :  'icon-minus'"></i>&nbsp; Modifier le projet {{ proj.title }}
+            </h1>
+            <div *ngIf="showForm">
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="title">Titre</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           name="title"
+                           id="title"
+                           autocomplete="off"
+                           required
+                           [(ngModel)]="proj.title"
+                           [ngClass]="{ 'form-group__input--error': projectTitle.invalid && (projectTitle.dirty || projectTitle.touched)}"
+                           #projectTitle="ngModel">
+                    <span class="form-group__error" *ngIf="projectTitle.errors?.required && projectTitle.touched">
+                        Le titre est obligatoire
+                    </span>
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="subTitle">Sous titre</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           name="subTitle"
+                           id="subTitle"
+                           autocomplete="off"
+                           [(ngModel)]="proj.subTitle"
+                           #projectSubTitle="ngModel">
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="type">Type de projet</label>
+                    <select
+                            class="form-control form-group__input"
+                            name="type"
+                            id="type"
+                            [(ngModel)]="proj.type"
+                            [ngClass]="{ 'form-group__input--error': projectType.invalid && (projectType.dirty || projectType.touched)}"
+                            #projectType="ngModel"
+                            required >
+                        <option [ngValue]="undefined" selected disabled>Sélectionner un type de projet</option>
+                        <option *ngFor="let type of types" [ngValue]="type">
+                            {{ type }}
+                        </option>
+                    </select>
+                    <span class="form-group__error" *ngIf="projectType.errors?.required && projectType.touched">
+                        Le type est obligatoire
+                    </span>
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="description">Description</label>
+                    <textarea
+                            class="form-control form-group__input"
+                            name="description"
+                            id="description"
+                            [(ngModel)]="proj.description"
+                            #projectDescription="ngModel">
+
+                    </textarea>
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="location">Lieu</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           name="location"
+                           id="location"
+                           required
+                           [ngClass]="{ 'form-group__input--error': projectLocation.invalid && (projectLocation.dirty || projectLocation.touched)}"
+                           [(ngModel)]="proj.location"
+                           #projectLocation="ngModel" />
+                    <span class="form-group__error" *ngIf="projectLocation.errors?.required && projectLocation.touched">
+                        le lieu est obligatoire
+                    </span>
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="surface">Surface</label>
+                    <input type="number"
+                           class="form-control form-group__input"
+                           name="surface"
+                           id="surface"
+                           required
+                           [ngClass]="{ 'form-group__input--error': projectSurface.invalid && (projectSurface.dirty || projectSurface.touched)}"
+                           [(ngModel)]="proj.surface"
+                           #projectSurface="ngModel" />
+                    <span class="form-group__error" *ngIf="projectSurface.errors?.required && projectSurface.touched">
+                        la surface est obligatoire
+                    </span>
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="realisationDate">Date de réalisation</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           id="realisationDate"
+                           name="realisationDate"
+                           [(ngModel)]="proj.realisationDate"
+                           #projectRealisationDate="ngModel" />
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="process">Procédés mis en œuvre</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           id="process"
+                           name="process"
+                           [(ngModel)]="proj.process"
+                           #projectProcess="ngModel" />
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="image">Image</label>
+                    <input type="text"
+                           class="form-control form-group__input"
+                           name="image"
+                           id="image"
+                           [(ngModel)]="proj.image"
+                           #projectImage="ngModel" />
+
+
+                </div>
+
+                <div class="form-group form-group--text">
+                    <label class="form-group__label" for="type">Format de l'image</label>
+                    <select
+                            class="form-control form-group__input"
+                            name="imageFormat"
+                            id="imageFormat"
+                            [(ngModel)]="proj.imageFormat"
+                            #projectImageFormat="ngModel"
+                            required >
+                        <option [ngValue]="undefined" selected disabled>Sélectionner un format d'image</option>
+                        <option *ngFor="let format of formats" [ngValue]="format">
+                            {{ format }}
+                        </option>
+                    </select>
+                </div>
+                <div class="canopee-btn-group">
+                <button type="button" class="btn canopee-btn"
+                        [disabled]="proj.title.invalid || proj.type.invalid ||  proj.location.invalid ||  proj.surface.invalid"
+                        (click)="updateProject(proj.title, proj.subTitle, proj.type, proj.description, proj.location,
+                         proj.realisationDate, proj.surface, proj.process, proj.image, proj.imageFormat, proj.id)">
+                    Modifier le projet
+                </button>
+                <button type="button"
+                        class="btn btn-danger canopee-btn canopee-btn--red canopee-btn--empty"
+                        (click)="deleteProject(proj.id)"> Supprimer le projet
+
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

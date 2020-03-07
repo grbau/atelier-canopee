@@ -1,7 +1,7 @@
 <section class="canopee-container">
     <!-- display list if admin is not connected -->
-    <ul class="projects-list row">
-        <li *ngFor="let project of projects" class="col-md-4 col-xs-12 projects-list__item">
+    <ul class="projects-list">
+        <li *ngFor="let project of projects"class="projects-list__item" [ngClass]="{'projects-list__item--vertical': project.imageFormat =='vertical', 'projects-list__item--horizontal': project.imageFormat =='horizontal'}">
             <a [routerLink]="['/particulier', project.id]" class="projects-list__link">
                 <figure class="projects-list__figure">
                     <img src="{{ project.image }}" class="projects-list__image" alt="{{ project.title }}" />
@@ -13,110 +13,159 @@
         </li>
     </ul>
 
-    {{ projects | json }}
     <!-- display form if admin is connected -->
-    <form #f="ngForm" name="projectForm" (submit)="addProject(f)">
+    <div *ngIf="isLogged">
+        <h1 class="h2-like title-line-after cursor-pointer mt-5" (click)="displayForm()">
+            <i class="icon icon-plus"  [ngClass]="!showForm ? 'icon-plus' :  'icon-minus'"></i>&nbsp;Ajouter un projet
+        </h1>
+        <form #f="ngForm" name="projectForm" (submit)="addProject(f)" *ngIf="showForm">
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="title">Titre</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       name="title"
+                       id="title"
+                       autocomplete="off"
+                       required
+                       [(ngModel)]="project.title"
+                       [ngClass]="{ 'form-group__input--error': projectTitle.invalid && (projectTitle.dirty || projectTitle.touched)}"
+                       #projectTitle="ngModel">
+                <span class="form-group__error" *ngIf="projectTitle.errors?.required && projectTitle.touched">
+                    Le titre est obligatoire
+                </span>
+            </div>
 
-        <div class="form-group">
-            <label>Titre</label>
-            <input type="text"
-                   class="form-control"
-                   name="title"
-                   required
-                   [(ngModel)]="project.title"
-                   #projectTitle="ngModel">
-            <span class="help-block danger" *ngIf="projectTitle.errors?.required && projectTitle.touched">
-                The title is required
-            </span>
-        </div>
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="subTitle">Sous titre</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       name="subTitle"
+                       id="subTitle"
+                       autocomplete="off"
+                       [(ngModel)]="project.subTitle"
+                       #projectSubTitle="ngModel">
+            </div>
 
-        <div class="form-group">
-            <label>Type de projet</label>
-            <select
-                   class="form-control"
-                   name="model"
-                   [(ngModel)]="project.type"
-                   #projectType="ngModel"
-                   required >
-                <option [ngValue]="undefined" selected disabled>Sélectionner un type de projet</option>
-                <option *ngFor="let type of types" [ngValue]="type">
-                    {{ type }}
-                </option>
-            </select>
-            <span class="help-block danger" *ngIf="projectType.errors?.required && projectType.touched">
-                The model name is required
-            </span>
-            <span class="help-block danger" *ngIf="projectType.errors?.pattern && projectType.touched">
-                The model name can only contain the letters a-z or A-Z
-            </span>
-        </div>
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="type">Type de projet</label>
+                <select
+                       class="form-control form-group__input"
+                       name="type"
+                       id="type"
+                       [(ngModel)]="project.type"
+                       [ngClass]="{ 'form-group__input--error': projectType.invalid && (projectType.dirty || projectType.touched)}"
+                       #projectType="ngModel"
+                       required >
+                    <option [ngValue]="undefined" selected disabled>Sélectionner un type de projet</option>
+                    <option *ngFor="let type of types" [ngValue]="type">
+                        {{ type }}
+                    </option>
+                </select>
+                <span class="form-group__error" *ngIf="projectType.errors?.required && projectType.touched">
+                    Le type est obligatoire
+                </span>
+            </div>
 
-        <div class="form-group">
-            <label>Description</label>
-            <textarea
-                   class="form-control"
-                   name="description"
-                   [(ngModel)]="project.description"
-                   #projectDescription="ngModel">
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="description">Description</label>
+                <textarea
+                       class="form-control form-group__input"
+                       name="description"
+                       id="description"
+                       [(ngModel)]="project.description"
+                       #projectDescription="ngModel">
 
-            </textarea>
+                </textarea>
 
-        </div>
+            </div>
 
-        <div class="form-group">
-            <label>Lieu</label>
-            <input type="text"
-                   class="form-control"
-                   name="location"
-                   required
-                   [(ngModel)]="project.location"
-                   #projectLocation="ngModel" />
-            <span class="help-block danger" *ngIf="projectLocation.errors?.required && projectLocation.touched">
-                le lieu est obligatoire
-            </span>
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="location">Lieu</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       name="location"
+                       id="location"
+                       required
+                       [ngClass]="{ 'form-group__input--error': projectLocation.invalid && (projectLocation.dirty || projectLocation.touched)}"
+                       [(ngModel)]="project.location"
+                       #projectLocation="ngModel" />
+                <span class="form-group__error" *ngIf="projectLocation.errors?.required && projectLocation.touched">
+                    le lieu est obligatoire
+                </span>
 
-        </div>
+            </div>
 
-        <div class="form-group">
-            <label>Surface</label>
-            <input type="number"
-                   class="form-control"
-                   name="surface"
-                   required
-                   [(ngModel)]="project.surface"
-                   #projectSurface="ngModel" />
-            <span class="help-block danger" *ngIf="projectSurface.errors?.required && projectSurface.touched">
-                la surface est obligatoire
-            </span>
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="surface">Surface</label>
+                <input type="number"
+                       class="form-control form-group__input"
+                       name="surface"
+                       id="surface"
+                       required
+                       [ngClass]="{ 'form-group__input--error': projectSurface.invalid && (projectSurface.dirty || projectSurface.touched)}"
+                       [(ngModel)]="project.surface"
+                       #projectSurface="ngModel" />
+                <span class="form-group__error" *ngIf="projectSurface.errors?.required && projectSurface.touched">
+                    la surface est obligatoire
+                </span>
 
-        </div>
+            </div>
 
-        <div class="form-group">
-            <label>Date de réalisation</label>
-            <input type="date"
-                   class="form-control"
-                   name="date"
-                   [(ngModel)]="project.realisationDate"
-                   #projectRealisationDate="ngModel" />
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="realisationDate">Date de réalisation</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       id="realisationDate"
+                       name="realisationDate"
+                       [(ngModel)]="project.realisationDate"
+                       #projectRealisationDate="ngModel" />
 
-        </div>
+            </div>
 
-        <div class="form-group">
-            <label>Image</label>
-            <input type="file"
-                   class="form-control"
-                   name="image"
-                   (change)="handleFileInput($event)"
-                   [(ngModel)]="project.image"
-                   #projectImage="ngModel" />
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="process">Procédés mis en œuvre</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       id="process"
+                       name="process"
+                       [(ngModel)]="project.process"
+                       #projectProcess="ngModel" />
+
+            </div>
+
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="image">Image</label>
+                <input type="text"
+                       class="form-control form-group__input"
+                       name="image"
+                       id="image"
+                       [(ngModel)]="project.image"
+                       #projectImage="ngModel" />
 
 
-        </div>
+            </div>
 
-        {{project | json}}
+            <div class="form-group form-group--text">
+                <label class="form-group__label" for="type">Format de l'image</label>
+                <select
+                        class="form-control form-group__input"
+                        name="imageFormat"
+                        id="imageFormat"
+                        [(ngModel)]="project.imageFormat"
+                        #projectImageFormat="ngModel"
+                         >
+                    <option [ngValue]="undefined" selected disabled>Sélectionner un format d'image</option>
+                    <option *ngFor="let format of formats" [ngValue]="format">
+                        {{ format }}
+                    </option>
+                </select>
+            </div>
 
-        <button
-                class="btn btn-primary btn-sm"
-                [disabled]="f.invalid">Ajouter un projet</button>
-    </form>
+            <button
+                    class="btn canopee-btn"
+                    [disabled]="f.invalid">Ajouter un projet</button>
+        </form>
+
+    </div>
+
 </section>

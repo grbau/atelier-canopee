@@ -1,0 +1,19 @@
+.page-footer {
+  $namespace: &;
+
+  text-align: center;
+  background: url('../assets/images/separator-footer.png') no-repeat center top;
+  padding: 1.5rem 0;
+
+  &__title {
+    color: $grey;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  &__location {
+    color: $green;
+    font-size: 1.3rem;
+  }
+}
+

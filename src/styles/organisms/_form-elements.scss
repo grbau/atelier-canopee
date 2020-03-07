@@ -1,0 +1,94 @@
+.form-control {
+  width: 100%;
+  height: $fieldTextHeight;
+  padding: 1rem $fieldTextHPad;
+  border: 1px solid $grey-lighter;
+  border-radius: .4rem;
+  background: $white;
+  font-size: 1.4rem;
+  transition: border-color .25s ease;
+
+  &::placeholder {
+    color: $grey-soft;
+  }
+
+  &:hover, &:focus, &:active {
+    border-color: $grey-soft;
+    outline: none;
+  }
+}
+
+.form-group {
+  $namespace: &;
+
+  position: relative;
+
+  &--text {
+    #{$namespace}__label  ~ input,
+    #{$namespace}__label  ~ textarea,
+    #{$namespace}__label  ~ select {
+      padding-top: 2.5rem;
+      padding-bottom: .5rem;
+    }
+  }
+
+  &__input--error {
+    border-color: $red;
+
+    &:focus,
+    &:hover {
+      border-color: $red;
+    }
+  }
+
+  #{$namespace}__label {
+    display: block;
+    position: absolute;
+    top: $fieldTextHeight / 2;
+    left: $fieldTextHPad;
+    z-index: 2;
+    font-weight: normal;
+    font-size: 1.4rem;
+    color: $grey-soft;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: font-size, transform;
+    transition-duration: $fieldTextLabelTransitionDuration;
+  }
+
+  &__error {
+    color: $red;
+    margin-top: .8rem;
+  }
+
+  &#{$namespace}--focus {
+    input {
+      border-color: $grey-soft;
+    }
+  }
+
+  &#{$namespace}--focus,
+  &#{$namespace}--filled {
+    border-color: $grey-light;
+
+    > #{$namespace}__label {
+      font-size: 1rem;
+      transform: translateY(-115%);
+    }
+
+    input {
+      &::placeholder {
+        color: $grey-soft;
+        transition-delay: $fieldTextLabelTransitionDuration;
+      }
+    }
+  }
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+

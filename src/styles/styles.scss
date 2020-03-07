@@ -14,8 +14,13 @@ a {
   color: currentColor;
 }
 
+body {
+  font-size: 1.4rem;
+}
+
 @import 'variables';
 @import "mixins";
 @import 'atoms';
 @import 'molecules';
 @import 'organisms';
+@import 'fonts';
