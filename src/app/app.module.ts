@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { HomeModule } from './home/home.module';
@@ -21,6 +21,9 @@ import { CommercialModule } from './commercial/commercial.module';
 import { CollectiveModule } from './collective/collective.module';
 import { LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { LoadingComponent } from './core/loading/loading.component';
+import { LoadingService } from './services/loading.service';
+import { LoadingInterceptor } from './services/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { GoogleAnalyticsService } from './services/google-analytics.service';
     LoginComponent,
     AlertComponent,
     WorkshopComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,14 +46,16 @@ import { GoogleAnalyticsService } from './services/google-analytics.service';
     CollectiveModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule,
+    NgbModule
   ],
   providers: [
       {provide: LocationStrategy, useClass: PathLocationStrategy},
       UserService,
       AuthGuard,
       AlertService,
-      GoogleAnalyticsService
+      GoogleAnalyticsService,
+      LoadingService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
