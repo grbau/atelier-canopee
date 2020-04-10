@@ -1,0 +1,60 @@
+.media {
+  display: flex;
+
+  @media screen and (max-width: 52.5em) {
+    flex-direction: column;
+  }
+
+  &.-flexEnd {
+    align-items: flex-end;
+
+    @media screen and (max-width: 52.5em) {
+      align-items: flex-start;
+    }
+  }
+
+  &__image {
+    margin-right: 10px;
+    @media screen and (max-width: 52.5em) {
+      margin-right: 0;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__content {
+    flex: 0 0 75%;
+
+    @media screen and (max-width: 52.5em) {
+      width: 100%;
+      flex-basis: 100%;
+    }
+  }
+
+  &__title {
+    position: relative;
+    display: inline-block;
+    &:before {
+      position: absolute;
+      content: '';
+      display: block;
+      width: calc(100% + 10px);
+      background: $green;
+      bottom: 0;
+      left: -10px;
+      height: 2px;
+
+      @media screen and (max-width: 52.5em) {
+        left: 0;
+        width: 100%;
+      }
+    }
+
+  }
+
+  + .media {
+    margin-top: 25px;
+  }
+}

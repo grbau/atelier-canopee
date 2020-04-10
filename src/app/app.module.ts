@@ -24,6 +24,7 @@ import { GoogleAnalyticsService } from './services/google-analytics.service';
 import { LoadingComponent } from './core/loading/loading.component';
 import { LoadingService } from './services/loading.service';
 import { LoadingInterceptor } from './services/loading.interceptor';
+import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { LoadingInterceptor } from './services/loading.interceptor';
     AlertComponent,
     WorkshopComponent,
     LoadingComponent,
+    FourOhFourComponent,
   ],
   imports: [
     BrowserModule,

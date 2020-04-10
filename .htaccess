@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# Set the headers for the restful api
+Header always set Access-Control-Allow-Origin *
+# Header always set Access-Control-Allow-Origin ateliercanopee.com
+# Header always set Access-Control-Allow-Origin http://localhost:4200
+Header always set Access-Control-Max-Age "1000"
+Header always set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Accept-Language Client-Security-Token, Accept-Encoding, Content-Language"
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+</IfModule>
